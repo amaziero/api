@@ -5,5 +5,6 @@
   "parserOptions": {
     "@typescript-eslint/space-before-function-paren": ["off"],
     "project": "./tsconfig.json"
-  }
+  },
+  "lint": "eslint './src/**/*.{ts,tsx}'"
 }
