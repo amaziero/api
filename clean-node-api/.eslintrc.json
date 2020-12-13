@@ -1,0 +1,9 @@
+{
+  "extends": "standard-with-typescript",
+  "space-before-function-paren": "off",
+  "strict-boolean-expressions": false,
+  "parserOptions": {
+    "@typescript-eslint/space-before-function-paren": ["off"],
+    "project": "./tsconfig.json"
+  }
+}
