@@ -4,4 +4,4 @@ export class SignUpController {
       statusCode: 400
     }
   }
-}
+};
