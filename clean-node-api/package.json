@@ -19,7 +19,7 @@
   },
   "lint": "eslint './src/**/*.{ts,tsx}'",
   "scripts": {
-    "test": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --watch",
     "test:staged": "jest --passWithNoTests"
   }
 }
