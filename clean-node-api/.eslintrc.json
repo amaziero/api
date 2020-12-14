@@ -1,13 +1,13 @@
 {
   "extends": "standard-with-typescript",
-  "space-before-function-paren": "off",
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "lint": "eslint './src/**/*.{ts,tsx}'",
+  // "space-before-function-paren": "off",
+  // "lint": "eslint './src/**/*.{ts,tsx}'",
   "rules": {
     "@typescript-eslint/space-before-function-paren": ["off"],
-    "@typescript-eslint/strict-boolean-expression": "off",
-    "@typescript-eslint/consistent-type-definitions": "off"
+    "@typescript-eslint/consistent-type-definitions": "off",    
+    "@typescript-eslint/strict-boolean-expressions": 0
   }
 }
