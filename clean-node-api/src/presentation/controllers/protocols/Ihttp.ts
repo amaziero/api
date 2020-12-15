@@ -1,8 +1,8 @@
 export interface IhttpResponse {
   statusCode: number
-  body: any
+  body?: any
 }
 
 export interface IhttpRequest {
-  body?: any
+  body: any
 }
