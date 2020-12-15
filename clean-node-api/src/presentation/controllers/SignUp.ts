@@ -1,8 +1,6 @@
 import { MissingParamError, InvalidParamError } from '../errors'
 import { badRequest, serverError } from '../helpers/http-helper'
-import { IEmailValidador } from './protocols/IEmailValidator'
-import { IhttpRequest, IhttpResponse } from './protocols/Ihttp'
-import { ISignUpController } from './protocols/ISignUpController'
+import { IhttpRequest, IhttpResponse, IEmailValidador, ISignUpController } from './protocols'
 
 export class SignUpController implements ISignUpController {
   private readonly emailValidator: IEmailValidador
