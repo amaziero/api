@@ -1,8 +1,27 @@
+import { InvalidParamError } from '../errors/invalid-params-error'
 import { MissingParamError } from '../errors/missing-params-error'
+import { IEmailValidador } from './protocols/IEmailValidator'
 import { SignUpController } from './SignUp'
 
-const makeSut = (): SignUpController => {
-  return new SignUpController()
+interface SutType {
+  sut: SignUpController
+  emailValidatorStub: IEmailValidador
+}
+
+const makeSut = (): SutType => {
+  class EmailValidatorStub implements IEmailValidador {
+    isValid(email: string): boolean {
+      return true
+    }
+  }
+
+  const emailValidatorStub = new EmailValidatorStub()
+  const sut = new SignUpController(emailValidatorStub)
+
+  return {
+    sut,
+    emailValidatorStub
+  }
 }
 
 describe('SignUp Controller', () => {
@@ -10,7 +29,7 @@ describe('SignUp Controller', () => {
     // sut stands for 'Sistem Under Test', tha means for the class wich is
     // been tested at the moment
 
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         email: 'any_email@mail.com',
@@ -29,7 +48,7 @@ describe('SignUp Controller', () => {
     // sut stands for 'Sistem Under Test', tha means for the class wich is
     // been tested at the moment
 
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         name: 'any name',
@@ -48,7 +67,7 @@ describe('SignUp Controller', () => {
     // sut stands for 'Sistem Under Test', tha means for the class wich is
     // been tested at the moment
 
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         name: 'any name',
@@ -67,7 +86,7 @@ describe('SignUp Controller', () => {
     // sut stands for 'Sistem Under Test', tha means for the class wich is
     // been tested at the moment
 
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         name: 'any name',
@@ -80,5 +99,30 @@ describe('SignUp Controller', () => {
 
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'))
+  })
+
+  test('should return 400 if invalid email is provided', () => {
+    // sut stands for 'Sistem Under Test', tha means for the class wich is
+    // been tested at the moment
+
+    const { sut, emailValidatorStub } = makeSut()
+
+    // Change the return to attent what you want to test
+    // within this test
+    jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
+
+    const httpRequest = {
+      body: {
+        name: 'any name',
+        email: 'invalid_email',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidParamError('email'))
   })
 })
