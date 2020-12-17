@@ -1,6 +1,2 @@
 export * from './Ihttp'
 export * from './ISignUpController'
-export * from './IEmailValidator'
-export * from './IAddAcount'
-export * from './IAddAccountModel'
-export * from './IAccountModel'
