@@ -1,4 +1,4 @@
-import { InvalidParamError, MissingParamError } from '../../errors'
+import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { SignUpController } from './SignUp'
 import {
   IEmailValidador, IAddAccount, IAccountModel, IAddAccountModel
@@ -166,13 +166,7 @@ describe('SignUp Controller', () => {
   })
 
   test('should call EmailValidator with correct email', () => {
-    // sut stands for 'Sistem Under Test', tha means for the class wich is
-    // been tested at the moment
-
     const { sut, emailValidatorStub } = makeSut()
-
-    // Change the return to attent what you want to test
-    // within this test
     const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
 
     const httpRequest = {
@@ -189,7 +183,28 @@ describe('SignUp Controller', () => {
     expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com')
   })
 
-  test('should call AddAcount with with correct values', () => {
+  test('should return 500 if EmailValidator throws error', () => {
+    const { sut, emailValidatorStub } = makeSut()
+    jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error()
+    })
+
+    const httpRequest = {
+      body: {
+        name: 'any name',
+        email: 'any_email@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  test('should call AddAcount with correct values', () => {
     const { sut, addAccountStub } = makeSut()
     const addSpy = jest.spyOn(addAccountStub, 'add')
 
@@ -209,5 +224,26 @@ describe('SignUp Controller', () => {
       email: 'invalid_email',
       password: 'any_password'
     })
+  })
+
+  test('should return 500 if AddAccount throws error', () => {
+    const { sut, addAccountStub } = makeSut()
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
+      throw new Error()
+    })
+
+    const httpRequest = {
+      body: {
+        name: 'any name',
+        email: 'any_email@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
