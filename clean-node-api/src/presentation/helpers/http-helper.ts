@@ -1,5 +1,5 @@
 import { IhttpResponse } from '../controllers/protocols/Ihttp'
-import { ServerError } from '../errors/server-error'
+import { ServerError } from '../errors'
 
 export const badRequest = (error: Error): IhttpResponse => {
   return {
