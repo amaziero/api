@@ -1,3 +1,6 @@
 export * from '../../../models/IAccountModel'
 export * from '../../../usecases'
 export * from '../../protocols/IEncrypter'
+export * from './DbAddAccountProtocols'
+export * from '../../../models/IAccountModel'
+export * from '../../protocols/IAddAccounRepository'
