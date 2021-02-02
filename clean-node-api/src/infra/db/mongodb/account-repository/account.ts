@@ -2,7 +2,6 @@ import { IAddAccounRepository } from '../../../../data/protocols/IAddAccounRepos
 import { IAccountModel } from '../../../../domain/models/IAccountModel'
 import { IAddAccountModel } from '../../../../domain/usecases'
 import { MongoHelper } from '../helpers/mongo-helper'
-// import { map } from './accountMaper'
 
 export class AccountMongoRepository implements IAddAccounRepository {
   async add(accountData: IAddAccountModel): Promise<IAccountModel> {
