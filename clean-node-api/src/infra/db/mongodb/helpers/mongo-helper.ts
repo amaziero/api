@@ -4,13 +4,7 @@ export const MongoHelper = {
   client: null as unknown as MongoClient,
 
   async connect(url: string): Promise<void> {
-    const MONGO_URL_CHECKED = process.env.MONGO_URL
-
-    if (!MONGO_URL_CHECKED) {
-      throw Error('Mongo URL Error')
-    }
-
-    this.client = await MongoClient.connect(MONGO_URL_CHECKED, {
+    this.client = await MongoClient.connect(url, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
