@@ -10,6 +10,12 @@
     "@typescript-eslint/consistent-type-definitions": "off",    
     "@typescript-eslint/strict-boolean-expressions": 0,
     "typescript-eslint/method-signature-style": 0,
-    "@typescript-eslint/no-floating-promises": 0
+    "@typescript-eslint/no-floating-promises": 0,
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": false
+      }
+    ]
   }
 }
